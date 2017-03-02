@@ -1,0 +1,32 @@
+// this crashes my debug player,
+// let's see if browser plugin is any better
+package {
+    import flash.display.*;
+    import flash.events.*;
+    import flash.geom.*;
+    public class CrashTest extends Sprite {
+        public var bd:BitmapData;
+        public function CrashTest () {
+            bd = new BitmapData (640, 480, false, 0);
+            stage.addEventListener (MouseEvent.CLICK, crash);
+        }
+		public var rects:Vector.<Rectangle> = Vector.<Rectangle>([
+new Rectangle (64.65979381443299, 27.71134020618554, 570.0618556701031, 543.340206185567), // 640 x 480
+new Rectangle (71.25773195876289, 23.752577319587616, 570.0618556701031, 561.1546391752577), // 640 x 480
+new Rectangle (62.02061855670101, 38.59793814432989, 581.938144329897, 561.1546391752577), // 640 x 480
+new Rectangle (114.8041237113402, 31.670103092783506, 581.938144329897, 570.0618556701031), // 640 x 480
+new Rectangle (124.04123711340208, 31.670103092783506, 570.0618556701031, 570.0618556701031), // 640 x 480
+new Rectangle (0, 0, 640, 480), // 640 x 480
+new Rectangle (71.25773195876289, 38.59793814432989, 570.0618556701031, 561.1546391752577), // 640 x 480
+new Rectangle (68.61855670103091, 38.59793814432989, 581.938144329897, 561.1546391752577), // 640 x 480
+new Rectangle (77.85567010309279, 38.59793814432989, 570.0618556701031, 561.1546391752577), // 640 x 480
+new Rectangle (68.61855670103091, 45.52577319587628, 581.938144329897, 552.2474226804123), // 640 x 480
+new Rectangle (68.61855670103091, 45.52577319587628, 581.938144329897, 552.2474226804123), // 640 x 480
+new Rectangle (135.91752577319588, 136.57731958762884, 308.7835051546392, 409.7319587628866), // 640 x 480
+new Rectangle (179.46391752577324, -18.804123711340218, 439.42268041237116, 329.5670103092784) // 640 x 480
+		]);
+        public function crash (e:Event):void {
+			for each (var r:Rectangle in rects) bd.histogram (r);
+        }
+    }
+}

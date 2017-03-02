@@ -1,0 +1,631 @@
+package 
+{
+	
+	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
+
+	[SWF(backgroundColor="#DDDDDD", frameRate=60)]
+	public class ElasticCollisionDemo extends Sprite
+	{
+		
+		private var simulator:Simulator;
+		
+		public function ElasticCollisionDemo()
+		{
+			
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			initSimulation();
+			
+		}
+		
+		private function initSimulation() : void
+		{
+			
+			simulator = new Simulator();
+			
+			simulator.addWall( new Wall( 40, 40, 400, 10 ) );
+			simulator.addWall( new Wall( 400, 10, 400, 200 ) );
+			simulator.addWall( new Wall( 400, 200, 300, 400 ) );
+			simulator.addWall( new Wall( 300, 400, 10, 400 ) );
+			simulator.addWall( new Wall( 10, 400, 40, 40 ) );
+			
+			//simulator.addParticle( new Particle( 400, 300, 0, 0, 900, 90 ) );
+			simulator.addParticle( new Particle( 100, 300, 0, 0, 400, 70 ) );
+			
+			for( var i:int = 0; i < 30; i++ )
+			{
+				
+				var canAdd:Boolean = true;
+				
+				var tx:Number = 50 + Math.random() * 240;
+				var ty:Number = 50 + Math.random() * 240;
+				
+				for each( var particle:Particle in simulator.particles )
+				{
+					if( Math.abs( particle.x.x - tx ) < particle.r + 5 && Math.abs( particle.x.y - ty ) < particle.r + 5 )
+					{
+						canAdd = false;
+						i--;
+						break;
+					}
+					
+				}
+				
+				if( canAdd ) simulator.addParticle( new Particle( tx, ty, Math.random() * 900, Math.random() * 900 ) );
+				
+			}
+			
+			simulator.addEventListener( Simulator.STEP, onSimulationStep );
+			simulator.run( this, Event.ENTER_FRAME );
+			
+		}
+		
+		private function onSimulationStep( event:Event ) : void
+		{
+			render();
+		}
+		
+		private function render() : void
+		{
+			
+			graphics.clear();
+			
+			graphics.lineStyle( 1 );
+			
+			for each( var wall:Wall in simulator.walls )
+			{
+				graphics.moveTo( wall.A.x, wall.A.y );
+				graphics.lineTo( wall.B.x, wall.B.y );
+			}
+			
+			
+			for each( var particle:Particle in simulator.particles )
+			{
+				graphics.drawCircle( particle.x.x, particle.x.y, particle.r );
+			}
+			
+		}
+		
+	}
+}
+
+
+
+
+import __AS3__.vec.Vector;
+import flash.events.EventDispatcher;
+import flash.events.Event;
+import flash.utils.getTimer;
+
+
+	
+[Event(name="step", type="Simulator")]
+
+
+class Simulator extends EventDispatcher
+{
+	
+	public static const STEP:String = "step";
+	
+	public var particles:Vector.<Particle>;
+	public var walls:Vector.<Wall>;
+	
+	//holds all the pairs that passed coarse collision detection
+	private var coarsePass:Vector.<ICollidablePair>;
+	
+	private var time:uint;
+	
+	
+	public function Simulator()
+	{
+		
+		super();
+		
+		particles = new Vector.<Particle>();
+		walls = new Vector.<Wall>();
+		
+	}
+	
+	
+	public function addParticle( particle:Particle ) : void
+	{
+		particles.push( particle );
+	}
+	
+	
+	public function addWall( wall:Wall ) : void
+	{
+		walls.push( wall );
+	}
+	
+	
+	//advances the simulation at each dispatch of the passed event type
+	public function run( updateDispatcher:EventDispatcher, eventType:String = Event.ENTER_FRAME ) : void
+	{
+		time = getTimer();
+		updateDispatcher.addEventListener( eventType, step, false, 0, true );
+	}
+	
+	
+	//advances the simulation by the amount of time that has passed since the last step
+	private function step( event:Event ) : void
+	{
+		
+		const MAX_ITERATIONS:uint = 100;
+		
+		//delta time in milliseconds
+		var dtms:uint = getTimer() - time;
+		
+		//delta time in seconds
+		var elapsed:Number = dtms / 1000;
+		
+		//start this step at 0 and advance to elapsed
+		var t:Number = 0;
+		
+		var dt:Number;
+		var iteration:uint;
+		
+		while( t < elapsed && ++iteration <= MAX_ITERATIONS )
+		{
+			
+			//start by trying to step over the entire remainder
+			dt = elapsed - t;
+			
+			//neglect pairs whose bounding boxes don't overlap
+			doCoarsePhase( dt );
+			
+			//holds the next future collision
+			var minPair:ICollidablePair = null;
+			var minT:Number = Number.POSITIVE_INFINITY;
+			
+			for each( var pair:ICollidablePair in coarsePass )
+			{
+				
+				//if the collision will happen within the current time-step
+				//compare the time against the current minimum
+				if( pair.willCollide( dt ) )
+				{
+					
+					//if it's less, store it as the min and proceed
+					if( pair.timeToCollision < minT )
+					{
+						minT = pair.timeToCollision;
+						minPair = pair;
+					}
+					
+				}
+				
+			}
+			
+			//change the actual time to integrate
+			if( minT < Number.POSITIVE_INFINITY ) dt = minT;
+			
+			//update the simulation to the time of collision
+			for each( var particle:Particle in particles )
+			{
+				particle.integrate( dt - 1e-8 );
+			}
+			
+			//resolve the collision instantaneously
+			if( minPair != null )
+			{
+				minPair.resolve();
+			}
+			
+			//update time by the stepped amount
+			t += dt;
+			
+		}
+		
+		time += dtms;
+		
+		dispatchEvent( new Event( Simulator.STEP ) );
+		
+	}
+	
+	
+	//rules out some unnecessary collision checks
+	private function doCoarsePhase( dt:Number ) : void
+	{
+		
+		coarsePass = new Vector.<ICollidablePair>();
+		
+		var aabb:AABB;
+		
+		for each( var particle:Particle in particles )
+		{
+			
+			//update the particle's bounding box to account for its velocity
+			particle.update( dt );
+			aabb = particle.aabb;
+			
+			//check each particle against each wall
+			for each( var wall:Wall in walls )
+			{
+				
+				if( aabb.isOverlapping( wall.aabb ) )
+				{
+					coarsePass.push( new ParticleWallPair( particle, wall ) );
+				}
+				
+			}
+			
+		}
+		
+		var n:int = particles.length;
+		
+		//check each particle against each other
+		for( var i:int = 0; i < n - 1; i++ )
+		{
+			
+			var p1:Particle = particles[ i ];
+			aabb = p1.aabb;
+			
+			for( var j:int = i + 1; j < n; j++ )
+			{
+				
+				var p2:Particle = particles[ j ];
+				
+				if( aabb.isOverlapping( p2.aabb ) ) 
+				{
+					coarsePass.push( new ParticleParticlePair( p1, p2 ) );
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+}
+
+
+
+
+//describes a common interface for collision pairs 
+interface ICollidablePair
+{
+	
+	function get timeToCollision() : Number;
+	
+	function willCollide( dt:Number ) : Boolean;
+	function resolve() : void;
+	
+}
+
+
+
+
+class ParticleParticlePair implements ICollidablePair
+{
+	
+	public var p1:Particle;
+	public var p2:Particle;
+	
+	private var t:Number;
+	
+	public function ParticleParticlePair( p1:Particle, p2:Particle )
+	{
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+	
+	public function get timeToCollision() : Number
+	{
+		return t;
+	}
+	
+	
+	public function willCollide( dt:Number ) : Boolean
+	{
+		
+		const EPSILON:Number = 1e-4;
+		
+		//points from 1 -> 2
+		var dx:Vec2D = p2.x.minus( p1.x );
+		
+		//if the circle's are already overlapped, return true (this brings the sim to a halt)
+		var c:Number = dx.dot( dx ) - ( p1.r + p2.r ) * ( p1.r + p2.r );
+		if( c < 0 )
+		{
+			t = EPSILON;
+			return true;
+		}
+		
+		//relative velocity
+		var dv:Vec2D = p2.v.minus( p1.v );
+		
+		var a:Number = dv.dot( dv );
+		if( a < EPSILON ) return false; //not moving enough toward each other to warrant a response
+		
+		var b:Number = dv.dot( dx );
+		if( b >= 0 ) return false; //moving apart
+		
+		var d:Number = b * b - a * c;
+		if( d < 0 ) return false; //no intersection
+		
+		t = ( -b - Math.sqrt( d ) ) / a;
+		
+		//circle's collide if the time of collision is within the current time-step
+		return t <= dt;
+
+	}
+	
+	//simulation has been updated so that the particles are just colliding
+	public function resolve() : void
+	{
+		
+		//points from 1 -> 2
+		var cn:Vec2D = p2.x.minus( p1.x );
+		
+		cn.normalize();
+		
+		//relative velocity
+		var dv:Vec2D = p2.v.minus( p1.v );
+		
+		//perfectly elastic impulse
+		var impulse:Number = cn.dot( dv.times( -2 ) ) / cn.dot( cn.times( 1 / p1.mass + 1 / p2.mass ) );
+		
+		//scale normal by the impulse
+		p1.v.plusEquals( cn.times( -impulse / p1.mass ) );
+		p2.v.plusEquals( cn.times(  impulse / p2.mass ) );
+		
+	}
+
+	
+}
+
+
+
+
+
+class ParticleWallPair implements ICollidablePair
+{
+	
+	public var p:Particle;
+	public var w:Wall;
+	
+	private var t:Number;
+	
+	public function ParticleWallPair( p:Particle, w:Wall )
+	{
+		
+		this.p = p;
+		this.w = w;
+		
+	}
+	
+	public function get timeToCollision() : Number
+	{
+		return t;
+	}
+	
+			 
+	public function willCollide( dt:Number ) : Boolean
+	{
+		
+		//this is line/line intersection
+		
+		//A is the position of the particle
+		//B is the position + velocity
+		//together they make the segment AB
+		
+		//CD is the line segment made up of the wall's end points
+		
+		var A:Vec2D = p.x;
+		var B:Vec2D = p.x.plus( p.v );
+		
+		var AB:Vec2D = B.minus( A );
+		
+		//inflate the normal by the particle's radius
+		var normScaledRadius:Vec2D = w.normal.times( -p.r );
+		
+		//push the wall segment in by this amount
+		var C:Vec2D = w.A.plus( normScaledRadius );
+		var D:Vec2D = w.B.plus( normScaledRadius );
+		
+		var CD:Vec2D = D.minus( C )
+		var AC:Vec2D = C.minus( A );
+		
+		t = w.normal.dot( AC ) / w.normal.dot( AB );
+		
+		if( isNaN( t ) ) t = 0;
+		
+		return t <= dt && t >= 0;
+
+	}
+	
+	//simulation has been updated so that the particles are coincident
+	public function resolve() : void
+	{
+				
+		var cn:Vec2D = w.normal;		
+						
+		//relative velocity
+		var dv:Vec2D = p.v;
+		
+		//perfectly elastic
+		var impulse:Number = cn.dot( dv.times( -2 ) ) / ( 1 / p.mass );
+		
+		p.v.plusEquals( cn.times( impulse / p.mass ) );
+		
+	}
+	
+}
+
+
+
+
+
+class Wall
+{
+	
+	public var A:Vec2D;
+	public var B:Vec2D;
+	
+	public var aabb:AABB;
+	
+	public var normal:Vec2D;
+	
+	public function Wall( ax:Number, ay:Number, bx:Number, by:Number ) 
+	{
+		
+		A = new Vec2D( ax, ay );
+		B = new Vec2D( bx, by );
+		
+		normal = new Vec2D( B.y - A.y, -( B.x - A.x ) );
+		normal.normalize();
+		
+		aabb = new AABB();
+		
+		aabb.minx = Math.min( ax, bx );
+		aabb.maxx = Math.max( ax, bx );
+		aabb.miny = Math.min( ay, by );
+		aabb.maxy = Math.max( ay, by );
+		
+	}
+	
+}
+
+
+class Particle
+{
+	
+	//position
+	public var x:Vec2D;
+	
+	//velocity
+	public var v:Vec2D;
+	
+	public var mass:Number;
+	
+	//radius
+	public var r:Number;
+	
+	//bounding box
+	public var aabb:AABB;
+	
+	public function Particle( xx:Number, xy:Number, vx:Number, vy:Number, mass:Number = 1.0, radius:Number = 5 )
+	{
+		
+		x = new Vec2D( xx, xy );
+		v = new Vec2D( vx, vy );
+		
+		this.mass = mass;
+		this.r = radius;
+		
+		aabb = new AABB();
+		
+	}
+	
+	public function update( t:Number ) : void
+	{
+		
+		var xt:Number = x.x + v.x * t;
+		var yt:Number = x.y + v.y * t;
+		
+		var minx:Number = Math.min( x.x, xt );
+		var maxx:Number = Math.max( x.x, xt );
+		
+		var miny:Number = Math.min( x.y, yt );
+		var maxy:Number = Math.max( x.y, yt );
+		
+		aabb.minx = minx - r;
+		aabb.maxx = maxx + r;
+		aabb.miny = miny - r;
+		aabb.maxy = maxy + r;
+		
+	}
+	
+	public function integrate( dt:Number ) : void
+	{
+		x.x += v.x * dt;
+		x.y += v.y * dt;
+	}
+	
+}
+
+
+class AABB
+{
+	
+	public var minx:Number = 0;
+	public var maxx:Number = 0;
+	public var miny:Number = 0;
+	public var maxy:Number = 0;
+	
+	public function isOverlapping( aabb:AABB ) : Boolean
+	{
+		
+		if( minx > aabb.maxx ) return false;
+		if( miny > aabb.maxy ) return false;
+		if( maxx < aabb.minx ) return false;
+		if( maxy < aabb.miny ) return false;
+		
+		return true;
+		
+	}
+	
+}
+
+
+class Vec2D
+{
+	
+	public var x:Number;
+	public var y:Number;
+	
+	public function Vec2D( x:Number = 0.0, y:Number = 0.0 )
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
+	public function plusEquals( vec2D:Vec2D ) : void
+	{
+		x += vec2D.x;
+		y += vec2D.y;
+	}
+	
+	public function plus( vec2D:Vec2D ) : Vec2D
+	{
+		return new Vec2D( x + vec2D.x, y + vec2D.y );
+	}
+	
+	public function minus( vec2D:Vec2D ) : Vec2D
+	{
+		return new Vec2D( x - vec2D.x, y - vec2D.y );
+	}
+	
+	public function times( s:Number ) : Vec2D
+	{
+		return new Vec2D( x * s, y * s );
+	}
+	
+	public function dot( vec2D:Vec2D ) : Number
+	{
+		return x * vec2D.x + y * vec2D.y;
+	}
+	
+	public function get magnitude() : Number
+	{
+		return Math.sqrt( x * x + y * y );
+	}
+	
+	public function normalize() : void
+	{
+		
+		var length:Number = magnitude;
+		
+		if( length == 0 ) return;
+		
+		x /= length;
+		y /= length;
+		
+	}
+	
+}
