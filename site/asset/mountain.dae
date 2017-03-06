@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.4.0" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+	<asset>
+		<contributor>
+			<author>Illusoft Collada 1.4.0 plugin for Blender - http://colladablender.illusoft.com</author>
+			<authoring_tool>Blender v:249 - Illusoft Collada Exporter v:0.3.162</authoring_tool>
+			<comments></comments>
+			<copyright></copyright>
+			<source_data></source_data>
+		</contributor>
+		<created>2010-02-07T11:45:40.917508</created>
+		<modified>2010-02-07T11:45:40.917528</modified>
+		<unit meter="0.01" name="centimeter"/>
+		<up_axis>Z_UP</up_axis>
+	</asset>
+	<library_effects>
+		<effect id="mountainMA-fx" name="mountainMA-fx">
+			<profile_COMMON>
+				<newparam sid="mountain_jpg-surface">
+					<surface type="2D">
+						<init_from>mountain_jpg-img</init_from>
+						<format>A8R8G8B8</format>
+					</surface>
+				</newparam>
+				<newparam sid="mountain_jpg-sampler">
+					<sampler2D>
+						<source>mountain_jpg-surface</source>
+						<minfilter>LINEAR_MIPMAP_LINEAR</minfilter>
+						<magfilter>LINEAR</magfilter>
+					</sampler2D>
+				</newparam>
+				<technique sid="blender">
+					<phong>
+						<emission>
+							<color>0.00000 0.00000 0.00000 1</color>
+						</emission>
+						<ambient>
+							<color>0.40000 0.40000 0.40000 1</color>
+						</ambient>
+						<diffuse>
+							<texture texcoord="CHANNEL1" texture="mountain_jpg-sampler"/>
+						</diffuse>
+						<specular>
+							<color>0.50000 0.50000 0.50000 1</color>
+						</specular>
+						<shininess>
+							<float>12.5</float>
+						</shininess>
+						<reflective>
+							<color>1.00000 1.00000 1.00000 1</color>
+						</reflective>
+						<reflectivity>
+							<float>0.0</float>
+						</reflectivity>
+						<transparent>
+							<color>1 1 1 1</color>
+						</transparent>
+						<transparency>
+							<float>0.0</float>
+						</transparency>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+	</library_effects>
+	<library_images>
+		<image id="mountain_jpg-img" name="mountain_jpg-img">
+			<init_from>../texture/mountain.jpg</init_from>
+		</image>
+	</library_images>
+	<library_materials>
+		<material id="mountainMA" name="mountainMA">
+			<instance_effect url="#mountainMA-fx"/>
+		</material>
+	</library_materials>
+	<library_geometries>
+		<geometry id="mountain_002" name="mountain_002">
+			<mesh>
+				<source id="mountain_002-Position">
+					<float_array count="60" id="mountain_002-Position-array">1.04344 1.64719 7.94652 0.63460 -1.59608 7.94652 -2.25094 -1.64719 7.94652 -1.94227 1.50608 7.79843 0.39625 1.00000 9.94652 -0.28920 -0.38675 10.57416 -1.60375 -1.00000 9.94652 -1.60375 1.00000 9.94652 -2.73495 2.23569 6.42252 -2.81864 -2.23569 6.04594 1.06848 -2.19788 4.83412 1.97905 2.47354 5.78961 2.72126 2.74022 3.40977 2.35205 -2.88709 3.10170 -3.32542 -2.75326 3.05246 -2.92004 2.88710 2.72512 -3.96628 3.52082 -0.71630 -3.96628 -3.52082 -0.71630 3.71416 -3.77634 -0.71630 3.27977 4.28739 -0.71630</float_array>
+					<technique_common>
+						<accessor count="20" source="#mountain_002-Position-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="mountain_002-Normals">
+					<float_array count="51" id="mountain_002-Normals-array">-0.22073 0.22073 0.95003 0.92598 -0.17338 0.33541 0.08981 -0.92248 0.37545 -0.97136 0.06475 0.22862 -0.03515 0.96353 0.26527 -0.92241 0.03594 0.38453 -0.01972 0.91529 0.40232 0.95256 -0.18772 0.23957 0.05379 -0.97186 0.22933 0.02074 -0.96788 0.25056 0.87808 -0.16426 0.44944 -0.00943 0.98886 0.14852 -0.99347 0.04755 0.10368 -0.97319 0.03697 0.22703 -0.06095 0.95805 0.28003 0.97201 -0.00066 0.23495 -0.02926 -0.97713 0.21061</float_array>
+					<technique_common>
+						<accessor count="17" source="#mountain_002-Normals-array" stride="3">
+							<param type="float" name="X"></param>
+							<param type="float" name="Y"></param>
+							<param type="float" name="Z"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<source id="mountain_002-UV">
+					<float_array count="204" id="mountain_002-UV-array">0.49909 0.52457 0.45951 0.51970 0.45050 0.48166 0.45050 0.48166 0.47943 0.49619 0.49909 0.52457 0.58633 0.61682 0.49909 0.52457 0.47943 0.49619 0.47943 0.49619 0.56505 0.38451 0.58633 0.61682 0.56505 0.38451 0.47943 0.49619 0.45050 0.48166 0.45050 0.48166 0.36470 0.41729 0.56505 0.38451 0.36470 0.41729 0.45050 0.48166 0.45951 0.51970 0.45951 0.51970 0.37841 0.61714 0.36470 0.41729 0.49909 0.52457 0.58633 0.61682 0.37841 0.61714 0.37841 0.61714 0.45951 0.51970 0.49909 0.52457 0.36470 0.41729 0.37841 0.61714 0.29774 0.73112 0.29774 0.73112 0.26856 0.32441 0.36470 0.41729 0.37841 0.61714 0.58633 0.61682 0.70201 0.74185 0.70201 0.74185 0.29774 0.73112 0.37841 0.61714 0.58633 0.61682 0.56505 0.38451 0.71147 0.22660 0.71147 0.22660 0.70201 0.74185 0.58633 0.61682 0.56505 0.38451 0.36470 0.41729 0.26856 0.32441 0.26856 0.32441 0.71147 0.22660 0.56505 0.38451 0.71147 0.22660 0.26856 0.32441 0.14625 0.19730 0.14625 0.19730 0.80629 0.12726 0.71147 0.22660 0.70201 0.74185 0.71147 0.22660 0.80629 0.12726 0.80629 0.12726 0.84044 0.84399 0.70201 0.74185 0.29774 0.73112 0.70201 0.74185 0.84044 0.84399 0.84044 0.84399 0.16954 0.89445 0.29774 0.73112 0.26856 0.32441 0.29774 0.73112 0.16954 0.89445 0.16954 0.89445 0.14625 0.19730 0.26856 0.32441 0.14625 0.19730 0.16954 0.89445 0.01314 0.97596 0.01314 0.97596 0.00000 0.04951 0.14625 0.19730 0.16954 0.89445 0.84044 0.84399 0.96315 1.00000 0.96315 1.00000 0.01314 0.97596 0.16954 0.89445 0.84044 0.84399 0.80629 0.12726 0.96315 0.00000 0.96315 0.00000 0.96315 1.00000 0.84044 0.84399 0.80629 0.12726 0.14625 0.19730 0.00000 0.04951 0.00000 0.04951 0.96315 0.00000 0.80629 0.12726</float_array>
+					<technique_common>
+						<accessor count="102" source="#mountain_002-UV-array" stride="2">
+							<param type="float" name="S"></param>
+							<param type="float" name="T"></param>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="mountain_002-Vertex">
+					<input semantic="POSITION" source="#mountain_002-Position"/>
+				</vertices>
+				<triangles count="34" material="mountainMA">
+					<input offset="0" semantic="VERTEX" source="#mountain_002-Vertex"/>
+					<input offset="1" semantic="NORMAL" source="#mountain_002-Normals"/>
+					<input offset="2" semantic="TEXCOORD" source="#mountain_002-UV"/>
+					<p>4 0 0 7 0 1 6 0 2 6 0 3 5 0 4 4 0 5 0 1 6 4 1 7 5 1 8 5 1 9 1 1 10 0 1 11 1 2 12 5 2 13 6 2 14 6 2 15 2 2 16 1 2 17 2 3 18 6 3 19 7 3 20 7 3 21 3 3 22 2 3 23 4 4 24 0 4 25 3 4 26 3 4 27 7 4 28 4 4 29 2 5 30 3 5 31 8 5 32 8 5 33 9 5 34 2 5 35 3 6 36 0 6 37 11 6 38 11 6 39 8 6 40 3 6 41 0 7 42 1 7 43 10 7 44 10 7 45 11 7 46 0 7 47 1 8 48 2 8 49 9 8 50 9 8 51 10 8 52 1 8 53 10 9 54 9 9 55 14 9 56 14 9 57 13 9 58 10 9 59 11 10 60 10 10 61 13 10 62 13 10 63 12 10 64 11 10 65 8 11 66 11 11 67 12 11 68 12 11 69 15 11 70 8 11 71 9 12 72 8 12 73 15 12 74 15 12 75 14 12 76 9 12 77 14 13 78 15 13 79 16 13 80 16 13 81 17 13 82 14 13 83 15 14 84 12 14 85 19 14 86 19 14 87 16 14 88 15 14 89 12 15 90 13 15 91 18 15 92 18 15 93 19 15 94 12 15 95 13 16 96 14 16 97 17 16 98 17 16 99 18 16 100 13 16 101</p>
+				</triangles>
+			</mesh>
+		</geometry>
+	</library_geometries>
+	<library_visual_scenes>
+		<visual_scene id="Scene" name="Scene">
+			<node layer="L1" id="mountain" name="mountain">
+				<translate sid="translate">0.00000 0.00000 0.00000</translate>
+				<rotate sid="rotateZ">0 0 1 0.00000</rotate>
+				<rotate sid="rotateY">0 1 0 -0.00000</rotate>
+				<rotate sid="rotateX">1 0 0 0.00000</rotate>
+				<scale sid="scale">1.00000 1.00000 1.00000</scale>
+				<instance_geometry url="#mountain_002">
+					<bind_material>
+						<technique_common>
+							<instance_material symbol="mountainMA" target="#mountainMA">
+								<bind_vertex_input input_semantic="TEXCOORD" input_set="1" semantic="CHANNEL1"/>
+							</instance_material>
+						</technique_common>
+					</bind_material>
+				</instance_geometry>
+			</node>
+		</visual_scene>
+	</library_visual_scenes>
+	<library_physics_materials>
+		<physics_material id="mountain-PhysicsMaterial" name="mountain-PhysicsMaterial">
+			<technique_common>
+				<dynamic_friction>0.5</dynamic_friction>
+				<restitution>0.0</restitution>
+				<static_friction>0.5</static_friction>
+			</technique_common>
+		</physics_material>
+	</library_physics_materials>
+	<library_physics_models>
+		<physics_model id="Scene-PhysicsModel" name="Scene-PhysicsModel">
+			<rigid_body name="mountain-RigidBody" sid="mountain-RigidBody">
+				<technique_common>
+					<dynamic>false</dynamic>
+					<mass>0</mass>
+					<instance_physics_material url="#mountain-PhysicsMaterial"/>
+					<shape>
+						<instance_geometry url="#mountain_002"/>
+					</shape>
+				</technique_common>
+			</rigid_body>
+		</physics_model>
+	</library_physics_models>
+	<library_physics_scenes>
+		<physics_scene id="Scene-Physics" name="Scene-Physics">
+			<instance_physics_model url="#Scene-PhysicsModel">
+				<instance_rigid_body body="mountain-RigidBody" target="#mountain"/>
+			</instance_physics_model>
+		</physics_scene>
+	</library_physics_scenes>
+	<scene>
+		<instance_physics_scene url="#Scene-Physics"/>
+		<instance_visual_scene url="#Scene"/>
+	</scene>
+</COLLADA>

@@ -1,0 +1,21 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<div></div>
+	<input></input>
+	<button>Test</button>
+	<script>
+		document.querySelector ('button').onclick = function () {
+			document.querySelector ('div').innerHTML =
+				'<object id="b" type="application/x-shockwave-flash" data="site/swf/' +
+					document.querySelector ('input').value.split ('.')[0] +
+						'.swf?' + Math.random ().toString (36).substr (2) + '" height="465" width="465">' +
+					'<param name="base" value="site/asset/">' +
+					'<param name="wmode" value="direct">' +
+				'</object>';
+		}
+	</script>
+</body>
+</html>

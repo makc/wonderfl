@@ -1,0 +1,4 @@
+<font color="#441100" size="24px">Load Complete</font>
+<font color="#000000" size="14px"><p>thanks</p></font>
+<font size="14px">alumican_net's </font>
+<a target="_blank" href="http://wonderfl.net/c/iNy0"><font size="14px"><u>Sketch of Voronoi</u></font></a>
