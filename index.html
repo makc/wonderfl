@@ -1,21 +1,208 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-</head>
-<body>
-	<div></div>
-	<input></input>
-	<button>Test</button>
-	<script>
-		document.querySelector ('button').onclick = function () {
-			document.querySelector ('div').innerHTML =
-				'<object id="b" type="application/x-shockwave-flash" data="site/swf/' +
-					document.querySelector ('input').value.split ('.')[0] +
-						'.swf?' + Math.random ().toString (36).substr (2) + '" height="465" width="465">' +
-					'<param name="base" value="site/asset/">' +
-					'<param name="wmode" value="direct">' +
-				'</object>';
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<style>
+		body {
+			font-family: Myriad, Helvetica, Arial, "Meiryo", "メイリオ", sans-serif;
+			line-height: 1.3; margin: 0;
+			background-color: #f7f7f7;
 		}
-	</script>
-</body>
+		.red {
+			color: #c33;
+		}
+
+		#container {
+			background-color: #fff;
+			text-align: center;
+			width: 100%;
+		}
+		@media (min-width: 940px) {
+			#container {
+				width: 920px; margin: auto;
+			}
+		}
+
+		#codes {
+			box-sizing: border-box;
+			padding: 10px; width: 100%;
+		}
+		@media (max-width: 939px) {
+			#codes {
+				/* 550px intentionaly cuts thumbnails to let them now they can scroll */
+				max-height: 550px; overflow-y: auto;
+			}
+		}
+
+		a.thumb {
+			display: inline-block; height: 100px; margin: 10px; padding: 0;
+			outline: 1px solid #ccc; text-decoration: none;
+			position: relative;
+		}
+		a.thumb * {
+			pointer-events: none;
+		}
+		a.thumb div.red {
+			position: absolute; right: 0; bottom: 0;
+			height: 50px; overflow-y: hidden;
+			font-size: 10px; text-align: right;
+			background: rgba(255, 255, 255, 0.4);
+		}
+		a.thumb:hover div.red {
+			background: rgba(255, 255, 255, 0.8);
+		}
+		a.thumb div.red div {
+			height: 50px; padding: 5px 10px; min-width: 70px;
+		}
+		a.thumb div.red div span {
+			font-size: 24px; font-weight: bold; margin-right: -2px;
+		}
+
+		pre {
+			text-align: left;
+		}
+		@media (min-width: 940px) {
+			pre {
+				margin: 0 8px; padding: 0 10px;
+			}
+		}
+
+		/* highlight.js theme */
+
+		.hljs-comment,.hljs-quote { color: #999 }
+		.hljs-name, .hljs-regexp, .hljs-selector-class, .hljs-selector-id, .hljs-tag, .hljs-template-variable, .hljs-variable { color: #e88 }
+		.hljs-built_in, .hljs-builtin-name, .hljs-link, .hljs-literal, .hljs-meta, .hljs-number, .hljs-params, .hljs-type { color: #fb5 }
+		.hljs-attribute, .hljs-bullet, .hljs-string, .hljs-symbol { color: #9c9 }
+		.hljs-section, .hljs-title { color: #c33 }
+		.hljs-keyword, .hljs-selector-tag { color: #69c }
+		.hljs { display: block; overflow-x: auto; background: #333; color: #ccc; padding: .5em 1em }
+		.hljs-emphasis { font-style: italic }
+		.hljs-strong { font-weight: 700 }
+		.hljs-addition { color: #333; background-color: #9c9 }
+		.hljs-deletion { color: #333; background-color: #e88 }
+	</style>
+</head>
+<body><div id="container">
+	<div id="codes"></div>
+	<div id="flash"></div>
+	<pre><code class="actionscript"></code></pre>
+</div>
+
+<script src="site/highlight.js"></script><script>
+
+// flash markup from code info
+function codeFlashHTML (code) {
+	return '<object id="b" type="application/x-shockwave-flash" data="site/swf/' + code.id + '.swf?' +
+		Math.random ().toString (36).substr (2) + '" height="465" width="465">' +
+			'<param name="base" value="site/asset/">' +
+			'<param name="wmode" value="direct">' +
+		'</object>' ;
+}
+
+// thumbnail markup from code info
+function codeThumbnailHTML (code) {
+	return '<a class="thumb" href="#' + code.id + '" title="' + code.title + '">' +
+		'<img src="site/thumbnail/' + code.id + '.jpg" width="205" height="100" />' +
+		'<div class="red">' +
+			'<div>pv&nbsp;<br /><span>' + (code.viewed || '&hellip;') + '</span></div>' +
+			'<div><img src="site/icon/fav.png" /><br /><span>' + code.favorited + '</span></div>' +
+			'<div><img src="site/icon/fork.png" /><br /><span>' + code.forked + '</span></div>' +
+		'</div>' +
+	'</a>' ;
+}
+
+// show certain code thumbnails
+function showCodeThumbnails (codes, from, where) {
+	var html = '';
+	for (var i = from; i < Math.min (codes.length, from + 20); i++) {
+		html += codeThumbnailHTML (codes [i]);
+	}
+	document.querySelector (where).innerHTML = html;
+}
+
+
+var users, codes, codesIndex;
+
+
+// update the page
+function updatePage () {
+	var hash = location.hash;
+	while (hash.charCodeAt (0) == 35) {
+		hash = hash.substr (1);
+	}
+
+	// accept user name or code id
+
+	var code;
+
+	if (users [hash]) {
+		code = users [hash].codes [0];
+		showCodeThumbnails (users [hash].codes, 0, '#codes');
+	} else {
+		if (!codesIndex [hash]) {
+			hash = codes [0].id;
+		}
+
+		code = codesIndex [hash];
+		showCodeThumbnails (codes, ((codes.indexOf (code) / 20) | 0) * 20, '#codes');
+	}
+
+	var request = new XMLHttpRequest;
+	request.onload = function () {
+		var codeElement = document.querySelector ('code');
+		codeElement.textContent = request.responseText;
+		hljs.highlightBlock (codeElement);
+	};
+	request.open ('GET', 'sources/' + code.id + '.as3');
+	request.send (null);
+
+	// TODO user info, code talk
+	document.getElementById ('flash').innerHTML = codeFlashHTML (code);
+}
+
+
+// load site data
+(function (callback) {
+
+	var requestUsers = new XMLHttpRequest;
+	requestUsers.onload = function () {
+		users = JSON.parse (requestUsers.responseText);
+		if (callback && codes) {
+			callback ();
+		}
+	};
+	requestUsers.open ('GET', 'site/users.json', true);
+	requestUsers.send (null);
+
+	var requestCodes = new XMLHttpRequest;
+	requestCodes.onload = function () {
+		codes = JSON.parse (requestCodes.responseText);
+		if (callback && users) {
+			callback ();
+		}
+	};
+	requestCodes.open ('GET', 'site/codes.json', true);
+	requestCodes.send (null);
+
+}) (function () {
+
+	codesIndex = {};
+	for (var i = 0; i < codes.length; i++) {
+		var code = codes[i];
+		codesIndex [code.id] = code;
+
+		code.forks = [];
+		if (code.parent) {
+			codesIndex [code.parent].forks.push (code);
+		}
+
+		users [code.user].codes = users [code.user].codes || [];
+		users [code.user].codes.push (code);
+	}
+
+	window.onhashchange = updatePage;
+	updatePage ();
+});
+
+</script></body>
 </html>
