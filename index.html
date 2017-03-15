@@ -2,19 +2,23 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="shortcut icon" type="image/png" href="site/icon/favicon.png" />
 	<style>
 		body {
 			font-family: Myriad, Helvetica, Arial, "Meiryo", "メイリオ", sans-serif;
 			line-height: 1.3; margin: 0;
 			background-color: #f7f7f7;
 		}
+		h3 {
+			font-size: 19px; margin: 10px 0;
+		}
 		.red {
 			color: #c33;
 		}
 
+
 		#container {
 			background-color: #fff;
-			text-align: center;
 			width: 100%;
 		}
 		@media (min-width: 940px) {
@@ -23,7 +27,45 @@
 			}
 		}
 
+
+		#topbar {
+			background-image: url("site/icon/logo.png"); background-position: 20px 23px; background-repeat: no-repeat;
+			border-bottom: 1px dashed #ccc;
+			height: 45px; padding: 10px 20px;
+		}
+		#topbar::after {
+			content: 'best of';
+		}
+		#search {
+			float: right;
+			background-image: url('site/icon/search.png'); background-position: 215px 12px; background-repeat: no-repeat;
+			margin-top: 2px; padding: 10px 30px 10px 10px;
+			border: 1px solid #ccc; border-radius: 10px;
+		}
+		#search input {
+			border: none;
+			width: 200px;
+		}
+		@media (max-width: 420px) {
+			#search {
+				background-position-x: 115px; 
+			}
+			#search input {
+				width: 100px;
+			}
+		}
+
+
+		#infobar {
+			padding: 20px;
+		}
+		#infobar h3 img {
+			height: 24px; margin-bottom: -5px;
+		}
+
+
 		#codes {
+			text-align: center;
 			box-sizing: border-box;
 			padding: 10px; width: 100%;
 		}
@@ -33,6 +75,7 @@
 				max-height: 550px; overflow-y: auto;
 			}
 		}
+
 
 		a.thumb {
 			display: inline-block; height: 100px; margin: 10px; padding: 0;
@@ -58,9 +101,7 @@
 			font-size: 24px; font-weight: bold; margin-right: -2px;
 		}
 
-		pre {
-			text-align: left;
-		}
+
 		@media (min-width: 940px) {
 			pre {
 				margin: 0 8px; padding: 0 10px;
@@ -83,6 +124,10 @@
 	</style>
 </head>
 <body><div id="container">
+	<div id="topbar" class="red"><div id="search"><input placeholder="Search..." /><!--
+		TODO https://developer.github.com/v3/search/#search-code
+	--></div></div>
+	<div id="infobar"><h3>&hellip;</h3><div></div></div>
 	<div id="codes"></div>
 	<div id="flash"></div>
 	<pre><code class="actionscript"></code></pre>
@@ -111,14 +156,69 @@ function codeThumbnailHTML (code) {
 	'</a>' ;
 }
 
+// format numeric date to match talk dates, yyyy/mm/dd hh:mm:ss
+function formatDate (date) {
+	var bits = (new Date (date * 1000)).toISOString ().match (/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+	return bits[1] + '/' + bits[2] + '/' + bits[3] + ' ' + bits[4] + ':' + bits[5] + ':' + bits[6]
+}
+
 // show certain code thumbnails
+// return date range and simple pagination functions
 function showCodeThumbnails (codes, from, where) {
 	var html = '';
 	for (var i = from; i < Math.min (codes.length, from + 20); i++) {
 		html += codeThumbnailHTML (codes [i]);
 	}
 	document.querySelector (where).innerHTML = html;
+
+	var date1 = formatDate (codes[from].created).substr (0, 10);
+	var date2 = formatDate (codes[i - 1].created).substr (0, 10);
+	var range = 'from ' + date1;
+	if (date1 != date2) {
+		range += ' to ' + date2;
+	}
+
+	var prev;
+	if (from >= 20) {
+		prev = function (callback) {
+			callback (showCodeThumbnails (codes, from - 20, where));
+		};
+	}
+
+	var next;
+	if (codes[i]) {
+		next = function (callback) {
+			callback (showCodeThumbnails (codes, i, where));
+		}
+	}
+
+	return {
+		range: range, prev: prev, next: next
+	};
 }
+
+function setInfoBarTitle (image, title) {
+	document.querySelector ('#infobar h3').innerHTML = '<img src="' + image + '" /> ' + title;
+}
+
+// TODO nicer pagination
+function setInfoBarLinks (page) {
+	document.querySelector ('#infobar div').innerHTML = page.range +
+		((page.prev || page.next) ?
+			' (' +
+				(page.prev ? '<a class="red prev">previous</a>' : '') +
+				((page.prev && page.next) ? ', ' : '') +
+				(page.next ? '<a class="red next">next</a>' : '') +
+			')' : '') +
+		':';
+
+	if (page.prev) {
+		document.querySelector ('#infobar .prev').onclick = function () { page.prev (setInfoBarLinks) }
+	}
+	if (page.next) {
+		document.querySelector ('#infobar .next').onclick = function () { page.next (setInfoBarLinks) }
+	}
+};
 
 
 var users, codes, codesIndex;
@@ -137,14 +237,16 @@ function updatePage () {
 
 	if (users [hash]) {
 		code = users [hash].codes [0];
-		showCodeThumbnails (users [hash].codes, 0, '#codes');
+		setInfoBarTitle ('site/avatar/' + users [hash].icon, hash + '&apos;s works');
+		setInfoBarLinks (showCodeThumbnails (users [hash].codes, 0, '#codes'));
 	} else {
 		if (!codesIndex [hash]) {
 			hash = codes [0].id;
 		}
 
 		code = codesIndex [hash];
-		showCodeThumbnails (codes, ((codes.indexOf (code) / 20) | 0) * 20, '#codes');
+		setInfoBarTitle ('site/icon/favicon.png', 'Everyone&apos;s works');
+		setInfoBarLinks (showCodeThumbnails (codes, ((codes.indexOf (code) / 20) | 0) * 20, '#codes'));
 	}
 
 	var request = new XMLHttpRequest;
