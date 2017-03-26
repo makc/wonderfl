@@ -895,7 +895,7 @@
 		"license": "MIT",
 		"title": "Wave",
 		"favorited": 124,
-		"forked": 21,
+		"forked": 22,
 		"viewed": 16869,
 		"talk": [
 			{
@@ -45180,6 +45180,7 @@
 	},
 	{
 		"id": "nWOM",
+		"parent": "19lm",
 		"created": 1300204517,
 		"modified": 1300238685,
 		"license": "MIT",
@@ -45227,11 +45228,6 @@
 			{
 				"comment": "cool!",
 				"user": "ooops"
-			},
-			{
-				"comment": "hey, I remember this http://wonderfl.net/c/19lm",
-				"date": "2011/03/17 01:28:51",
-				"user": "makc3d"
 			}
 		],
 		"user": "bradsedito"
