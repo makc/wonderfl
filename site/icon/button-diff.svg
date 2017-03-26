@@ -1,0 +1,9 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="32 0 238 238">
+<g>
+	<polygon style="fill:#EEE;" points="219,0 32,0 32,238 270,238 270,50"/>
+	<polygon style="fill:#C33;" points="227,25 32,25 32,0 219,0"/>
+	<polygon style="fill:#CCC;" points="219,50 270,50 219,0"/>
+	<polygon style="fill:#C33;" points="110,100 140,100 140,70 160,70 160,100 190,100 190,120 140,120 140,150 160,150, 160,120 110,120"/>
+	<polygon style="fill:#C33;" points="110,170 190,170 190,190 110,190"/>
+</g>
+</svg>

@@ -5,15 +5,16 @@
 	<link rel="shortcut icon" type="image/png" href="site/icon/favicon.png" />
 	<style>
 		a {
-			cursor: pointer;
+			cursor: pointer; text-decoration: none; border-bottom: 1px dotted;
 		}
 		body {
 			font-family: Myriad, Helvetica, Arial, "Meiryo", "メイリオ", sans-serif;
+			font-size: 16px;
 			line-height: 1.3; margin: 0;
 			background-color: #f7f7f7;
 		}
 		h3 {
-			font-size: 19px; margin: 10px 0;
+			font-size: 24px; font-weight: bold; margin: 10px 0;
 		}
 		.red {
 			color: #c33;
@@ -63,7 +64,7 @@
 			padding: 20px;
 		}
 		#infobar h3 img {
-			height: 24px; margin-bottom: -5px;
+			height: 25px; margin-bottom: -3px;
 		}
 
 
@@ -82,8 +83,11 @@
 
 		a.thumb {
 			display: inline-block; height: 100px; margin: 10px; padding: 0;
-			outline: 1px solid #ccc; text-decoration: none;
+			outline: 1px solid #ccc; border: none;
 			position: relative;
+		}
+		a.thumb.selected {
+			outline: 5px dashed #c33;
 		}
 		a.thumb * {
 			pointer-events: none;
@@ -105,10 +109,23 @@
 		}
 
 
-		@media (min-width: 940px) {
-			pre {
-				margin: 0 8px; padding: 0 10px;
-			}
+		#selected .left { float: left }
+		#selected .right { float: right }
+		#selected td { padding: 10px 20px 10px 0; line-height: 1.4 }
+		#selected .avatar { text-align: right; width: 70px }
+		#selected .avatar a { border: none }
+		#selected .avatar img { width: 25px; margin-top: 10px }
+		#selected .main .avatar img { width: 50px; }
+		#selected .main td, #selected .parent td, #selected .content td { border-bottom: 1px dashed #ccc }
+		#selected .main .num, #selected .main .text { font-size: 24px; font-weight: bold }
+		#selected .main .button { margin: 0 0 -5px 15px; cursor: pointer; width: 28px }
+		#selected .text { word-break: break-all; display: inline-block; font-weight: 100 }
+		#selected .parent .text { font-weight: bold }
+		#selected .content { font-size: 14px; display: none }
+		#selected .content td { padding-left: 19px }
+		#selected .content div.actionscript, #selected .content div.diff { word-break: break-all; text-align: left }
+		@media (max-width: 939px) {
+			#selected .content td { padding: 0 }
 		}
 
 		/* highlight.js theme */
@@ -119,7 +136,7 @@
 		.hljs-attribute, .hljs-bullet, .hljs-string, .hljs-symbol { color: #9c9 }
 		.hljs-section, .hljs-title { color: #c33 }
 		.hljs-keyword, .hljs-selector-tag { color: #69c }
-		.hljs { display: block; overflow-x: auto; background: #333; color: #ccc; padding: .5em 1em }
+		.hljs { background: #333; color: #ccc; padding: .5em 1em }
 		.hljs-emphasis { font-style: italic }
 		.hljs-strong { font-weight: 700 }
 		.hljs-addition { color: #333; background-color: #9c9 }
@@ -132,20 +149,129 @@
 	--></div></div>
 	<div id="infobar"><h3>&hellip;</h3><div></div></div>
 	<div id="codes"></div>
-	<div id="flash"></div>
-	<pre><code class="actionscript"></code></pre>
+	<div id="selected"></div>
 </div>
 
-<script src="site/highlight.js"></script><script>
+<script src="site/diff.js"></script><script src="site/highlight.js"></script><script>
 
-// flash markup from code info
-function codeFlashHTML (code) {
-	return '<object id="b" type="application/x-shockwave-flash" data="site/swf/' + code.id + '.swf?' +
+// selected code markup
+function selectedCodeHTML (code) {
+	var rows = '', addRow = function (className, userName, dateString, text, textLink, extra) {
+		rows += '<tr class="' + className + '" valign="top">' +
+			'<td class="avatar">' +
+				(users [userName] ? '<a href="#' + userName + '">' : '') +
+				'<img src="site/avatar/' +
+					(users [userName] ? users [userName].icon : 'img_user_anonymous.gif') +
+				'">' +
+				(users [userName] ? '</a>' : '') +
+			'</td><td>' +
+				(users [userName] ? '<a href="#' + userName + '" class="red">' : '') +
+					'<b>' + userName + '</b>' +
+				(users [userName] ? '</a>' : '') +
+
+				' ' + dateString + '<br />' +
+
+				(textLink ? '<a href="#' + textLink + '" class="red ' : '<span class="') + 'text">' +
+					text +
+				(textLink ? '</a>' : '</span>') +
+
+				'<br />' + (extra ? extra : '') +
+			'</td>' +
+		'</tr>';
+	};
+
+	var parent = codesIndex [code.parent];
+	if (parent) {
+		addRow ('parent', parent.user, 'on ' + formatDate (parent.created), parent.title, code.parent);
+	}
+
+	addRow ('main', code.user, 'on ' + formatDate (code.created), code.title, null,
+		'<img src="site/icon/fav.png" style="margin: 0 4px -3px 0" /><span class="red num">' + code.favorited + '</span>' +
+		'<img src="site/icon/fork.png" style="margin: 0 4px -1px 10px" /><span class="red num">' + code.forked + '</span>' +
+		'<img class="button" src="site/icon/button-swf.svg" title="run" onclick="showFlash(\'' + code.id + '\')" />' +
+		'<img class="button" src="site/icon/button-as3.svg" title="read" onclick="showSource(\'' + code.id + '\')" />' +
+		(parent
+			? '<img class="button" src="site/icon/button-diff.svg" title="diff" onclick="showDifference(\'' + parent.id + '\', \'' + code.id + '\')" />'
+			: '')
+	);
+
+	rows += '<tr class="content"><td colspan="2" align="center"></td></tr>';
+
+	for (var i = 0; i < code.talk.length; i++) {
+		addRow ('comment', code.talk [i].user, 'on ' + code.talk [i].date, code.talk [i].comment);
+	}
+
+	return '<table width="100%" cellspacing="0">' + rows + '</table>'
+}
+
+// run the code
+function showFlash (id) {
+	document.querySelector ('#selected .content td').innerHTML =
+		'<object type="application/x-shockwave-flash" data="site/swf/' + id + '.swf?' +
 		Math.random ().toString (36).substr (2) + '" height="465" width="465">' +
 			'<param name="base" value="site/asset/">' +
 			'<param name="wmode" value="direct">' +
 		'</object>' ;
+	document.querySelector ('#selected .content').style.display = 'table-row';
+
+	setTimeout (function () {
+		document.querySelector ('#selected').scrollIntoView ();
+		document.querySelector ('object').focus ();
+	}, 456);
 }
+
+function showHighlightedText (text, language) {
+	document.querySelector ('#selected .content td').innerHTML =
+		'<div class="' + language + '"></div>';
+
+	var div = document.querySelector ('div.' + language);
+	div.textContent = text;
+
+	hljs.highlightBlock (div);
+
+	div.innerHTML = div.innerHTML
+		.replace (/\n/g, '<br />')
+		.replace (/ {2}/g, '&nbsp;&nbsp;')
+		.replace (/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+
+	document.querySelector ('#selected .content').style.display = 'table-row';
+	document.querySelector ('#selected').scrollIntoView ();	
+}
+
+// show the code
+function showSource (id) {
+	var request = new XMLHttpRequest;
+	request.onload = function () {
+		document.querySelector ('#selected .content td').innerHTML =
+			'<div class="actionscript"></div>';
+
+		showHighlightedText (request.responseText, 'actionscript');
+	};
+	request.open ('GET', 'sources/' + id + '.as3');
+	request.send (null);
+}
+
+// show the difference
+function showDifference (pid, id) {
+	var request = new XMLHttpRequest;
+	request.onload = function () {
+		var parentSource = request.responseText;
+
+		request = new XMLHttpRequest;
+		request.onload = function () {
+			var diff = JsDiff.createPatch ('',
+				parentSource, request.responseText,
+			'', '');
+
+			showHighlightedText (diff.substr (diff.indexOf ('@@')), 'diff');
+		};
+		request.open ('GET', 'sources/' + id + '.as3');
+		request.send (null);
+	};
+	request.open ('GET', 'sources/' + pid + '.as3');
+	request.send (null);
+}
+
 
 // thumbnail markup from code info
 function codeThumbnailHTML (code) {
@@ -254,17 +380,13 @@ function updatePage () {
 		}
 	}
 
-	var request = new XMLHttpRequest;
-	request.onload = function () {
-		var codeElement = document.querySelector ('code');
-		codeElement.textContent = request.responseText;
-		hljs.highlightBlock (codeElement);
-	};
-	request.open ('GET', 'sources/' + code.id + '.as3');
-	request.send (null);
+	document.querySelectorAll('#codes a').forEach (function (a) {
+		a.classList.remove ('selected');
+	});
 
-	// TODO user info, code talk
-	document.getElementById ('flash').innerHTML = codeFlashHTML (code);
+	document.querySelector ('#codes a[href="#' + hash + '"]').classList.add ('selected');
+
+	document.getElementById ('selected').innerHTML = selectedCodeHTML (code);
 }
 
 
