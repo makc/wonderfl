@@ -199,7 +199,10 @@ function setSelectedCode (code) {
 	rows += '<tr class="content"><td colspan="2" align="center"></td></tr>';
 
 	for (var i = 0; i < code.talk.length; i++) {
-		addRow ('comment', code.talk [i].user, code.talk [i].date ? 'on ' + code.talk [i].date : '<img src="site/icon/fav.png" />', code.talk [i].comment);
+		addRow ('comment', code.talk [i].user,
+			code.talk [i].date ? 'on ' + code.talk [i].date : '<img src="site/icon/fav.png" />',
+			(code.talk [i].comment + ' ').replace (/(http[^\s]+)\s/g, '<a href="$1" class="red" rel="nofollow">$1</a> ')
+		);
 	}
 
 	if (code.forks.length) {
