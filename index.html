@@ -128,6 +128,12 @@
 			#selected .content td { padding: 0 }
 		}
 
+
+		/* just some space */
+		#selected { margin-top: 30px }
+		#forks { padding-bottom: 150px }
+
+
 		/* highlight.js theme */
 
 		.hljs-comment,.hljs-quote { color: #999 }
@@ -340,6 +346,11 @@ function showCodeThumbnails (codes, from, where) {
 		next = function (callback) {
 			callback (showCodeThumbnails (codes, i, where));
 		}
+	}
+
+	// TODO remove this hack when the navigation is redone
+	if (document.body.scrollTop > document.querySelector (where).offsetTop + 100) {
+		document.querySelector (where).previousElementSibling.scrollIntoView ();
 	}
 
 	return {
