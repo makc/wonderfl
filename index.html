@@ -198,7 +198,7 @@ function selectedCodeHTML (code) {
 	rows += '<tr class="content"><td colspan="2" align="center"></td></tr>';
 
 	for (var i = 0; i < code.talk.length; i++) {
-		addRow ('comment', code.talk [i].user, 'on ' + code.talk [i].date, code.talk [i].comment);
+		addRow ('comment', code.talk [i].user, code.talk [i].date ? 'on ' + code.talk [i].date : '<img src="site/icon/fav.png" />', code.talk [i].comment);
 	}
 
 	return '<table width="100%" cellspacing="0">' + rows + '</table>'
