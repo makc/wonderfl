@@ -264,7 +264,7 @@ function showSource (id) {
 
 		showHighlightedText (request.responseText, 'actionscript');
 	};
-	request.open ('GET', 'sources/' + id + '.as3');
+	request.open ('GET', 'sources/' + id + '.as');
 	request.send (null);
 }
 
@@ -284,10 +284,10 @@ function showDifference (pid, id) {
 
 			showHighlightedText (diff.substr (diff.indexOf ('@@')), 'diff');
 		};
-		request.open ('GET', 'sources/' + id + '.as3');
+		request.open ('GET', 'sources/' + id + '.as');
 		request.send (null);
 	};
-	request.open ('GET', 'sources/' + pid + '.as3');
+	request.open ('GET', 'sources/' + pid + '.as');
 	request.send (null);
 }
 
