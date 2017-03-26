@@ -201,7 +201,9 @@ function setSelectedCode (code) {
 	for (var i = 0; i < code.talk.length; i++) {
 		addRow ('comment', code.talk [i].user,
 			code.talk [i].date ? 'on ' + code.talk [i].date : '<img src="site/icon/fav.png" />',
-			(code.talk [i].comment + ' ').replace (/(http[^\s]+)\s/g, '<a href="$1" class="red" rel="nofollow">$1</a> ')
+			(code.talk [i].comment + ' ')
+				.replace (/\n/g, '<br />')
+				.replace (/(http[^\s]+)\s/g, '<a href="$1" class="red" rel="nofollow">$1</a> ')
 		);
 	}
 
@@ -369,7 +371,7 @@ function setInfoBarLinks (page) {
 };
 
 
-var users, codes, codesIndex;
+var users, codes, best, codesIndex;
 
 
 // update the page
@@ -394,8 +396,14 @@ function updatePage () {
 
 		code = codesIndex [hash];
 		if (document.querySelector ('#codes a[href="#' + hash + '"]') == null) {
-			setInfoBarTitle ('site/icon/favicon.svg', 'Everyone&apos;s works');
-			setInfoBarLinks (showCodeThumbnails (codes, ((codes.indexOf (code) / 20) | 0) * 20, '#codes'));
+			// current selection does not have the code
+			if (best.indexOf (code) > -1) {
+				setInfoBarTitle ('site/icon/favicon.svg', 'The best works');
+				setInfoBarLinks (showCodeThumbnails (best, ((best.indexOf (code) / 20) | 0) * 20, '#codes'));
+			} else {
+				setInfoBarTitle ('site/icon/favicon.svg', 'Miscellaneous works');
+				setInfoBarLinks (showCodeThumbnails (codes, ((codes.indexOf (code) / 20) | 0) * 20, '#codes'));
+			}
 		}
 	}
 
@@ -446,6 +454,27 @@ function updatePage () {
 
 		users [code.user].codes = users [code.user].codes || [];
 		users [code.user].codes.push (code);
+	}
+
+	best = [];
+	var allowedFaves2009 = 100,   allowedFaves2017 = 20;
+	var allowedViews2009 = 10000, allowedViews2017 = 300;
+	for (var i = 0; i < codes.length; i++) {
+		var code = codes[i];
+		var year = 1970 + code.created / 31536000;
+		if (
+			// if code has no forks in this repo, it was the chosen one
+			// otherwise it might be here only to preserve fork history
+			((code.user != 'makc3d') && (code.forks.length == 0)) ||
+			// yet some of the codes were influential
+			(code.forks.length > 2) ||
+			// and some were quite popular at the time
+			(code.favorited > allowedFaves2017 + (allowedFaves2009 - allowedFaves2017) * (2017 - year) / (2017 - 2009) ) ||
+			(code.viewed    > allowedViews2017 + (allowedViews2009 - allowedViews2017) * (2017 - year) / (2017 - 2009) )
+		) {
+			// ~2 in 3 codes passes this test
+			best.push (code);
+		}
 	}
 
 	window.onhashchange = updatePage;
