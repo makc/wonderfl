@@ -268,12 +268,12 @@ function showSource (id) {
 function showDifference (pid, id) {
 	var request = new XMLHttpRequest;
 	request.onload = function () {
-		var parentSource = request.responseText;
+		var parentSource = request.responseText.replace (/\r/g, '');
 
 		request = new XMLHttpRequest;
 		request.onload = function () {
 			var diff = JsDiff.createPatch ('',
-				parentSource, request.responseText,
+				parentSource, request.responseText.replace (/\r/g, ''),
 			'', '', {
 				ignoreWhitespace: true
 			});
