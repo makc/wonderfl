@@ -227,6 +227,7 @@ function showFlash (id) {
 		Math.random ().toString (36).substr (2) + '" height="465" width="465">' +
 			'<param name="base" value="site/asset/">' +
 			'<param name="wmode" value="direct">' +
+			'<img src="site/invisibleman/bp_' + ('0'+(((Math.random() * 20)|0) + 1)).match(/\d\d$/).pop() + '.png" height="465" width="465">' +
 		'</object>' ;
 	document.querySelector ('#selected .content').style.display = 'table-row';
 
