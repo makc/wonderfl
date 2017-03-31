@@ -1,6 +1,6 @@
 /*
      お手軽キラキラPixel3D！
-     キラキラ方法はこちらを使わせてもらいましたー：http://wonderfl.net/code/71344f9a655053d9f793a32c68f00921c67f1977    
+     キラキラ方法はこちらを使わせてもらいましたー：http://wonderfl.net/c/g9s1    
 */
 package
 {

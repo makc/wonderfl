@@ -8,7 +8,7 @@
     
     [使い方 B]
     CHECKMATEのProfessional問題のパターンに使えます
-    http://wonderfl.net/code/5f88476bd21cac4d45ad2086af2333782a5d3cb8
+    http://wonderfl.net/c/dD7k
     ※CHECKMATEの出題問題はパターンのデザインを競い合うものではなくて
     　パターンを駆使してどのような表現をするかが趣旨だと思うので
     　このツールで簡単に投稿できるようになりますが、

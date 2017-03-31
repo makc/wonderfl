@@ -13,22 +13,22 @@
  * このFlashはwonderfl上の様々なテクニックを元に作られました
  * 
  * Twitter連動
- * http://wonderfl.net/code/04d6d1ae7e943b7faab88623ed83404e7a40c5f7
+ * http://wonderfl.net/c/GO9L
  * 
  * キラキラ3D
- * http://wonderfl.net/code/c0f513f31389ba07e375331256c2bfa3a8b9006c
+ * http://wonderfl.net/c/rwYK
  * 
  * 文字のパーティクル化
- * http://wonderfl.net/code/08ec1c2c8da8e9e487867a8e2ab8cddeb75f8986
+ * http://wonderfl.net/c/1gVG
  * 
  * 木を作る再帰関数
- *　http://wonderfl.net/code/00cbe3ecbf0db2e865bc410a8ea54677c19ba4c6 
+ *　http://wonderfl.net/c/72PE 
  * 
  * 配列のシャッフル
- * http://wonderfl.net/code/8cfa39c9e91a268791142fe605c010dc30338588 
+ * http://wonderfl.net/c/k78X 
  * 
  * BetweenAS3の時間調整
- * http://wonderfl.net/code/59af9d8a3cc45e4c2e6fcf12a9bc9ea55b1576e7
+ * http://wonderfl.net/c/cNoK
  * 
  */
 package {
@@ -152,7 +152,7 @@ package {
                 loaderList,
                 function():void{
                     
-                    // Twitter連携 by　http://wonderfl.net/code/04d6d1ae7e943b7faab88623ed83404e7a40c5f7 (coppieee)
+                    // Twitter連携 by　http://wonderfl.net/c/GO9L (coppieee)
                     default xml namespace = new Namespace("http://www.w3.org/2005/Atom");
                     var xml:XML = XML(getResourceById(URL_TWITTER).data);
                     for (var i:int = 0; i < xml.entry.length(); i++) {
@@ -278,7 +278,7 @@ package {
                     var hatenaBtn:CastButton = new CastButton({x:20, y:433});
                     hatenaBtn.addChild(new Bitmap(getResourceById(URL_IMG_BTN_HATENA).data));
                     hatenaBtn.onCastMouseUp = function():void{
-                        navigateToURL(new URLRequest("http://b.hatena.ne.jp/append?http://wonderfl.net/code/d5de28ad1f65364ee33b964101222be41a7320af"));
+                        navigateToURL(new URLRequest("http://b.hatena.ne.jp/append?http://wonderfl.net/c/uvXF"));
                     }
                     hatenaBtn.buttonMode = true;
                     addChild(hatenaBtn);
@@ -291,7 +291,7 @@ package {
                     tweetBtn.buttonMode = true;
                     addChild(tweetBtn);
                     
-                    // キラキラロジック by http://wonderfl.net/code/c0f513f31389ba07e375331256c2bfa3a8b9006c (sake)
+                    // キラキラロジック by http://wonderfl.net/c/rwYK (sake)
                     canvas = new BitmapData(720 / 4, 485 / 4, false, 0x000000);
                     var bmp:Bitmap = new Bitmap(canvas, PixelSnapping.NEVER, false);
                     bmp.scaleX = bmp.scaleY = 4;
@@ -450,7 +450,7 @@ package {
         }
         /**
          * 木を作る再帰関数
-         *　http://wonderfl.net/code/00cbe3ecbf0db2e865bc410a8ea54677c19ba4c6 
+         *　http://wonderfl.net/c/72PE 
          * @param x
          * @param y
          * @param z
@@ -485,7 +485,7 @@ package {
         
         /**
          * １行でArrayをシャッフルする by nemu90kWw
-         * http://wonderfl.net/code/8cfa39c9e91a268791142fe605c010dc30338588 
+         * http://wonderfl.net/c/k78X 
          */        
         public function shuffle(array:Array):Array{
             return array.sort(function():int{return int(Math.random()*3)-1});

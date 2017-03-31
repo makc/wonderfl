@@ -5,7 +5,7 @@
  * -参考-
  * 
  * キラキラPixel3D！
- * http://wonderfl.net/code/c0f513f31389ba07e375331256c2bfa3a8b9006c
+ * http://wonderfl.net/c/rwYK
  */
 package
 {

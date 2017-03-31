@@ -1,6 +1,6 @@
 // forked from cellfusion's Particle Sample
-// Particle Sample Part2 http://wonderfl.net/code/22a06782b22470146ea62c1040ba435928fbf21c
-// 浮かんで消える http://wonderfl.net/code/c4b218d595f245b5ac1eb97903e10e5fe973dbac
+// Particle Sample Part2 http://wonderfl.net/c/4WjT
+// 浮かんで消える http://wonderfl.net/c/s439
 // write as3 code here..
 // 光の表現のサンプルです。
 

@@ -3,7 +3,7 @@
  * 
  * [inspired by]
  * 某Pad
- * http://wonderfl.net/code/63331dcac2f468ad4da986160bc91d39945e6211
+ * http://wonderfl.net/c/e9yM
  * -------------------------------------------------------------------
  */
 

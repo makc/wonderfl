@@ -8,7 +8,7 @@ http://ja.wikipedia.org/wiki/ドロネー図
 ドロネー図の作図方法
 http://homepage3.nifty.com/endou/tips/04/tips33.htm
 外接円
-http://wonderfl.net/code/ad8b6c5010abdb44d3e34d3a7cd06a200b35175d
+http://wonderfl.net/c/oLfj
 .fla2「YuruYurer」（195P）
 http://www.amazon.co.jp/dp/4862670717
 */

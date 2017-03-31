@@ -174,7 +174,7 @@ package
 		/**
 		 * 炎エフェクトの初期設定
 		 * Saqooshaさんのを元に、透過対応にしたりと改造して作ってます
-		 * http://wonderfl.net/code/bffb3437de866ffdfcdd5015b1fba5ca37fff72a
+		 * http://wonderfl.net/c/rolo
 		 */		private function blazeLoadEnd(e:Event):void
 		{
 			_blazePaletteSource = Bitmap(e.target.content).bitmapData;

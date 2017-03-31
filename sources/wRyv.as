@@ -1,4 +1,4 @@
-// @thanks WireFrame SpaceShip | http://wonderfl.net/code/99ba3f5409b660f700f5df4df4ca7f6eb1a7ab92
+// @thanks WireFrame SpaceShip | http://wonderfl.net/c/lVW5
 package {
     import org.papervision3d.view.BasicView;
     import flash.text.TextField;

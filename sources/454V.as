@@ -3,7 +3,7 @@
 // forked from tail_y's SmolderEffect
 // Man, I wish I could read Japanese...  
 // or that everyone wrote their comments in English.
-// 背景はこれ使ってます http://wonderfl.net/code/fce0bea0fdd401df6025c3285419ca5efb5b4cce
+// 背景はこれ使ってます http://wonderfl.net/c/A53P
 package
 {
 	/*

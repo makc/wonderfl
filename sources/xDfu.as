@@ -241,7 +241,7 @@ class Gradation {
 
 
 /**-----------------------------------------------------
- * @see http://wonderfl.net/code/5f88476bd21cac4d45ad2086af2333782a5d3cb8
+ * @see http://wonderfl.net/c/dD7k
  * ----------------------------------------------------- 
 */ 
 import flash.display.Bitmap; 

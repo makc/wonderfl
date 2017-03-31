@@ -1,4 +1,4 @@
-// ENGLISH UI VERSION: http://wonderfl.net/code/23e05e0fa27a91913bc541d8e1bf3984db837141
+// ENGLISH UI VERSION: http://wonderfl.net/c/57np
 // mixi VERSION: http://mixi.jp/run_appli.pl?id=6930
 
 // forked from checkmate's colin challenge for professionals
@@ -4129,10 +4129,10 @@ package
 		public function onTweet(e:MouseEvent):void {
 //			ExternalInterface.call("mixi.util.requestExternalNavigateTo",
 //				"http://twitter.com/home/?status=" 
-//				+ escapeMultiByte("Join me and play TypeShoot! http://wonderfl.net/code/bc91e1ddbdf13b313832b95f8eca60c3758a5228")
+//				+ escapeMultiByte("Join me and play TypeShoot! http://wonderfl.net/c/qUaj")
 //			);
 			navigateToURL(new URLRequest("http://twitter.com/home/?status=" 
-				+ escapeMultiByte("Join and play TypeShoot! http://wonderfl.net/code/bc91e1ddbdf13b313832b95f8eca60c3758a5228"))
+				+ escapeMultiByte("Join and play TypeShoot! http://wonderfl.net/c/qUaj"))
 			);
 		}
 		public function updateHandicap():void {

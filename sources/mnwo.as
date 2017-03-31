@@ -2,9 +2,9 @@
 //-----------------------------------------------------
 // 次の２つの組み合わせ＋αです
 //  - HelloWorld3D 
-//    http://wonderfl.net/code/50225c9944de6206a3813f515fce2c51fd56ab23
+//    http://wonderfl.net/c/bqTO
 //  - キラキラPixel3D！ in Native Flash 10 3D API 
-//    http://wonderfl.net/code/8283df8a03a8f3c290bc88a056b44b3c6084b123
+//    http://wonderfl.net/c/iCAB
 package {
     import flash.display.*;
     import flash.events.Event;

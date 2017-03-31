@@ -202,7 +202,7 @@ internal class Particle extends EmptyClass
 //--------------------------------------------------
 /**
  * @author saqoosha
- * @see http://wonderfl.net/code/7ed2d650b9d513edf9a499fb704c19ecb7aa4694
+ * @see http://wonderfl.net/c/i5VS
  */
 import frocessing.color.ColorLerp;
 import org.libspark.betweenas3.core.easing.IEasing;

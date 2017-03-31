@@ -5,7 +5,7 @@
  * Desktop Tower Defense
  * http://www.handdrawngames.com/DesktopTD/
  * Dijkstra Visualization
- * http://wonderfl.net/code/6faaab5234abf034417a8e753f6309de0b9560f0
+ * http://wonderfl.net/c/fVQE
  * and 神の書とwonderflのパーティクル作品群
  * ------------------------------------------------------------------
  * [操作方法]

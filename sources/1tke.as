@@ -2,7 +2,7 @@
  * みんな大好き、ストレンジアトラクタ。　クリックでリスタート。
  * 
  * パラメータが時間と共に変わるバージョンですよ
- * http://wonderfl.net/code/90734a988f6be3310a692f419ea0c8e981660e4e
+ * http://wonderfl.net/c/kBRL
  * 
  * @author alumican.net
  */

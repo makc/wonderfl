@@ -15,7 +15,7 @@ package
      * Fortuneのアルゴリズムをフルスクラッチでやってみました。
      * 
      * が、
-     * 超速(http://wonderfl.net/code/1b53ccd79d8620d235f03ed4cd9e821912879f9e)には
+     * 超速(http://wonderfl.net/c/3TKq)には
      * どうやっても勝てる気がしません。
      * 
      * クリックで移動開始

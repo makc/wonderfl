@@ -128,7 +128,7 @@ package {
         
         /**
          * drawTriangles でテクスチャを貼り付けるメソッド
-         * 参考： http://wonderfl.net/code/e7e1e28a9f20d73f11f0bb02d3e4b5f512c7cc0f
+         * 参考： http://wonderfl.net/c/x5kf
          */
         private function draw(e:Event = null):void {
             var vertices:Vector.<Number> = new Vector.<Number>();

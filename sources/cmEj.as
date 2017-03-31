@@ -11,7 +11,7 @@ package
 
     /**
      * Snake Game とりあえず100行以内で書きたかった。
-     * 簡易のAI 例 http://wonderfl.net/code/c4b660633f93dee3264a37ca5fbbdb3a7e3adf02
+     * 簡易のAI 例 http://wonderfl.net/c/s4ck
      */
     [SWF (backgroundColor = "0xFFFFFF", frameRate = "60", width = "465", height = "465")]
     public class SnakeGame extends Sprite

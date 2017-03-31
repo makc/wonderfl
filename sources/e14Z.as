@@ -1,5 +1,5 @@
 /**
- * see http://wonderfl.net/code/68080952a04c2257794d4643f6ddf3f17465c6bc
+ * see http://wonderfl.net/c/eQiS
  */
 package {
 	import flash.display.GraphicsPathCommand;

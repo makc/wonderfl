@@ -5,7 +5,7 @@
 //	　　　直角に曲がるのが好きだから仕方がないのです。～
 //
 //	繋がる点はこちら	
-//		http://wonderfl.net/code/7549de9ee8ce403f21c35755c4b99f6d282b2135
+//		http://wonderfl.net/c/gJA7
 //
 package 
 {

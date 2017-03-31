@@ -2,7 +2,7 @@
 // 玉をつかんでこうポイっと。
 
 // Base64ImageLoader add complete
-// http://wonderfl.net/code/d13a85899a700da06cfcce52aa87fbefd5708479
+// http://wonderfl.net/c/tQVa
 package
 {
     import flash.display.*;

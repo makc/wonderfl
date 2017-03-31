@@ -1,5 +1,5 @@
 /**
- * http://wonderfl.net/code/e040d9da0f2a2bb74095a325a5a0dd9cdab7c5cb
+ * http://wonderfl.net/c/vZPT
  * adobe checkmate 1 で投稿した上記 URL 作品は本来、こういうものにしたかったのでした。
  * 詳細は http://aquioux.blog48.fc2.com/blog-entry-624.html から続く一連の解説をご覧ください。
  */

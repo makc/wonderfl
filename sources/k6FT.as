@@ -228,6 +228,6 @@ mov f1.b, f1.r
 
 set f1.a, 1
 
-assembler: http://wonderfl.net/code/ff8dbc0a3468ef771745856eb977672e61cf0fdb/fullscreen
+assembler: http://wonderfl.net/c/AsJq/fullscreen
 
 */
