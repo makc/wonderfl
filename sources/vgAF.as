@@ -1,3 +1,8 @@
+// 正20面体からサッカーボールを作りました。
+//
+// こちらを参考にしました。
+// http://wonderfl.net/c/iN0J
+// http://sci-tech.ksc.kwansei.ac.jp/~shimeno/math/golden/goldensection.html
 package{
     import flash.display.BitmapData;
     import flash.display.Shape;
