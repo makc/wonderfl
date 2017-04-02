@@ -1,6 +1,6 @@
 // forked from tatsuhisa's forked from: ２つの円を円弧で繋ぐ
 // forked from Kay's ２つの円を円弧で繋ぐ
-//http://wonderfl.kayac.com/code/5656d1a3a53ba7896347ae9527cce71ab1f2742e
+// http://wonderfl.net/c/cjN4
 /*
  * ２つの円を円弧で繋ぐ
  * リアルな水滴の表現に向けて目玉焼きみたいな

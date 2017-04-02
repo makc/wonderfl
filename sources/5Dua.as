@@ -369,7 +369,7 @@ package
         
         // ----------------------------------------------
         // Mouse Interactive
-        // http://wonderfl.kayac.com/code/2af71dd58ee46ba3ebf7496c63b4726c84a20980
+        // http://wonderfl.net/c/685u
         // ----------------------------------------------
         
         private var isOribiting:Boolean;

@@ -6,7 +6,7 @@
 * blog : http://tirirenge.undo.jp/?p=1726
 *
 * こちらを参考にして虹色のグラデーションできました！thx！
-* http://wonderfl.kayac.com/code/2039da32bb0346bf7bd7723e75492995841be82a
+* http://wonderfl.net/c/4B5e
 **/
 
 package

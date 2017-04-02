@@ -1,6 +1,6 @@
 // yd_niku さんの
 // Flight404 の人のコードをAS3にしてみた ver2
-// http://wonderfl.kayac.com/code/881224c6000816b64f79b854671a48eeeac7c8d0
+// http://wonderfl.net/c/jpJO
 // をもとに Flash でもそれなりの速度が出るよう書き直した
 
 // 画像をプリレンダリングしたり

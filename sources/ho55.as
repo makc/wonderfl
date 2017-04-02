@@ -26,7 +26,7 @@ package {
 	public class PythagorasTree3D extends Sprite {
 
 		// tree elements (center positions, left and up vectors)
-		// similar to http://wonderfl.kayac.com/code/18d2f77aeee90b0a3ae76dc5509a60f8bacad276
+		// similar to http://wonderfl.net/c/3xBs
 		private var atA:Point3D = new Point3D, ltA:Point3D = new Point3D, upA:Point3D = new Point3D;
 		private var atB:Point3D = new Point3D, ltB:Point3D = new Point3D, upB:Point3D = new Point3D;
 		private var atC:Point3D = new Point3D, ltC:Point3D = new Point3D, upC:Point3D = new Point3D;

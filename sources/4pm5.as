@@ -7,7 +7,7 @@
 package {
     /**
     * マウス判定をつけてみました
-    * 参照: http://wonderfl.kayac.com/code/8e43498120fd4403504b7987f73d3274d12f1a42
+    * 参照: http://wonderfl.net/c/kivX
     * 2万パーティクル
     */    
     import flash.display.*;

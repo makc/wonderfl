@@ -88,7 +88,7 @@ class KeyMapper {
 
 class Sky extends Shape {
     // This color gradation is refered from nemu90kWw's 水平線
-    // http://wonderfl.kayac.com/code/2b527a2efe155b7f69330822a3c7f7733ab6ea7e
+    // http://wonderfl.net/c/6bfe
     public var gradation:* = {
         color:[0x103860,0x4070B8,0x60B0E0,0xD0F0F0,0x0033c0,0x0033c0], 
         alpha:[100, 100, 100, 100, 100, 0], 
@@ -105,7 +105,7 @@ class Sky extends Shape {
 
 class Landscape extends Bitmap {
     // This color gradation is refered from psyrak's BumpyPlanet 
-    // http://wonderfl.kayac.com/code/d79cd85845773958620f42cb3e6cb363c2020c73
+    // http://wonderfl.net/c/uLoH
     public var gradation:* = {
         color:[0x000080,0x0066ff,0xcc9933,0x00cc00,0x996600,0xffffff], 
         alpha:[100, 100, 100, 100, 100, 100], 

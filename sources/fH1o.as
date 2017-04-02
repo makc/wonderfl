@@ -24,7 +24,7 @@
 
 /*
 [PV3D] Refrection Cube / clockmaker
-http://wonderfl.kayac.com/code/51b80a3181a9a11fc248c7b48bd6ce33eef5aeaa
+http://wonderfl.net/c/bEUY
 */
 package {
     	//

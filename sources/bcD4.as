@@ -2,7 +2,7 @@
 // forked from shaktool's Peak beta 1
 // forked from shaktool's Peak
 // borrowed some code from psyark's BumpyPlanet:
-// http://wonderfl.kayac.com/code/d79cd85845773958620f42cb3e6cb363c2020c73
+// http://wonderfl.net/c/uLoH
 
 package {
   import flash.display.*;

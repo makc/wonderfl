@@ -45,7 +45,7 @@ package
 			scene.root.addChild (p);
 
 			// the reason for this fork is great idea by paq,
-			// http://wonderfl.kayac.com/code/7cbc840af08054aa087e2fdf8b8f1b01b222f752
+			// http://wonderfl.net/c/hNt6
 			for (q = 0; q < N; q++) {
 				initialize(); 
 				boutaoshi(); 

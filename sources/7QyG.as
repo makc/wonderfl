@@ -2,7 +2,7 @@
  * @sketchbookgames Fixed the counter bug. ty:)
  *
  * GlowLine from
- * http://wonderfl.kayac.com/code/704630050881c4429dca8c7f27296b6e2fa3fa4f
+ * http://wonderfl.net/c/g1dQ
  * 
  * マウス押しっぱなしで切りまくるようにした
  */

@@ -2,8 +2,8 @@
 //
 //  外部画像を1pxごとに表示[2]
 //  
-//  (1)http://wonderfl.kayac.com/code/126732a59894091b319c6685d9708ed00b63a809
-//  (2)http://wonderfl.kayac.com/code/0a0b187cfee8ac0c84aaa5858906970adc9168b2
+//  (1)http://wonderfl.net/c/2CNH
+//  (2)http://wonderfl.net/c/1qQx
 //  
 //  (1)のコードを参考に、(2)を調整
 //  

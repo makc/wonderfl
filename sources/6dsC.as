@@ -9,7 +9,7 @@ http://fladdict.net/blog/2009/05/computer-painting.html
 http://www.cap.or.jp/~toukei/kandokoro/html/14/14_2migi.htm
 
 画像の読み込み処理：
-http://wonderfl.kayac.com/code/3fb2258386320fe6d2b0fe17d6861e7da700706a
+http://wonderfl.net/c/95tK
 
 RGB->HSB変換：
 http://d.hatena.ne.jp/flashrod/20060930#1159622027

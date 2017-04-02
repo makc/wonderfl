@@ -123,7 +123,7 @@ package
 			scene.root.addChild (p);
 
 			// the reason for this fork is great idea by paq,
-			// http://wonderfl.kayac.com/code/7cbc840af08054aa087e2fdf8b8f1b01b222f752
+			// http://wonderfl.net/c/hNt6
 			for (q = 0; q < N; q++) {
 				initialize(); 
 				boutaoshi(); 
@@ -265,7 +265,7 @@ package
 
 
 // base64 code by 2ndyofyyx,
-// http://wonderfl.kayac.com/code/b3a19884080f5ed34137e52e7c3032f3510ef861
+// http://wonderfl.net/c/pD5G
 import flash.utils.ByteArray; 
 class Base64 extends ByteArray { 
     private static const BASE64:Array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62,0,0,0,63,52,53,54,55,56,57,58,59,60,61,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0,0,0,0,0,0,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,0,0,0,0,0]; 

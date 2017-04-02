@@ -23,9 +23,9 @@ package {
 	 * 今回はPerlinNoiseの復習と、ビット演算子の勉強になります。
 	 * 
 	 * 前々回
-	 * http://wonderfl.kayac.com/code/03190641c00b157abc0dbe7d6a513fa80ec987db
+	 * http://wonderfl.net/c/rp2U
 	 * 前回
-	 * http://wonderfl.kayac.com/code/cafcb78df40b35b0c0d571dc8fd8f1bda791e4b4
+	 * http://wonderfl.net/c/sXHT
 	 * 
 	 * フォースマップっていう考え方らしいですが、
 	 * PerlinNoiseの色を速度に変換するらしいです。
