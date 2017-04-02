@@ -142,7 +142,7 @@
 		#selected .text { word-break: break-all; display: inline-block; font-weight: 100 }
 		#selected .parent .text { font-weight: bold }
 		#selected .content { font-family: monospace; font-size: 14px; display: none }
-		#selected .content td { padding-left: 19px }
+		#selected .content td { background-blend-mode: screen; background-color: #333; background-position-x: 50%; background-size: cover; padding: 0; }
 		#selected .content div.actionscript, #selected .content div.diff { word-break: break-all; text-align: left }
 		@media (max-width: 939px) {
 			#selected .content td { padding: 0 }
@@ -222,7 +222,7 @@ function setSelectedCode (code) {
 			: '')
 	);
 
-	rows += '<tr class="content"><td colspan="2" align="center"></td></tr>';
+	rows += '<tr class="content"><td colspan="2" align="center" style="background-image:url(\'site/thumbnail/' + code.id + '.jpg\')"></td></tr>';
 
 	for (var i = 0; i < code.talk.length; i++) {
 		addRow ('comment', code.talk [i].user,
