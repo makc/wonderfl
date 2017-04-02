@@ -109,6 +109,26 @@
 		}
 
 
+		@keyframes thumbData {
+			    0% { margin-top: 0px; }
+			2%, 33% { margin-top: -60px; }
+			35%, 66% { margin-top: -120px; }
+			68%, 100% { margin-top: 0px; }
+		}
+
+		@-webkit-keyframes thumbData {
+			    0% { margin-top: 0px; }
+			2%, 33% { margin-top: -60px; }
+			35%, 66% { margin-top: -120px; }
+			68%, 100% { margin-top: 0px; }
+		}
+
+		a.thumb div.red div:first-child {
+			animation: thumbData 9s linear infinite;
+			-webkit-animation: thumbData 9s linear infinite;
+		}
+
+
 		#selected .left { float: left }
 		#selected .right { float: right }
 		#selected td { padding: 10px 20px 10px 0; line-height: 1.4 }
@@ -302,10 +322,12 @@ function showDifference (pid, id) {
 
 // thumbnail markup from code info
 function codeThumbnailHTML (code) {
+	var delay = (Math.random () * 6).toFixed (2) + 's'
 	return '<a class="thumb" href="#' + code.id + '" title="' + code.title + '">' +
 		'<img src="site/thumbnail/' + code.id + '.jpg" width="205" height="100" />' +
 		'<div class="red">' +
-			'<div>pv&nbsp;<br /><span>' + (code.viewed || '&hellip;') + '</span></div>' +
+			'<div style="animation-delay:' + delay + ';-webkit-animation-delay:' + delay + '">' +
+				'pv&nbsp;<br /><span>' + (code.viewed || '&hellip;') + '</span></div>' +
 			'<div><img src="site/icon/fav.png" /><br /><span>' + code.favorited + '</span></div>' +
 			'<div><img src="site/icon/fork.png" /><br /><span>' + code.forked + '</span></div>' +
 		'</div>' +
