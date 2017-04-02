@@ -33,11 +33,14 @@
 
 
 		#topbar {
-			background-image: url("site/icon/logo.png"); background-position: 20px 23px; background-repeat: no-repeat;
 			border-bottom: 1px dashed #ccc;
 			height: 45px; padding: 10px 20px;
 		}
-		#topbar::after {
+		#logo {
+			background-image: url("site/icon/logo.png"); background-position: 0 13px; background-repeat: no-repeat;
+			height: 40px; width: 130px; float: left; cursor: pointer;
+		}
+		#logo::after {
 			content: 'best of';
 		}
 		#search {
@@ -170,9 +173,7 @@
 	</style>
 </head>
 <body><div id="container">
-	<div id="topbar" class="red"><div id="search"><input placeholder="Search..." /><!--
-		TODO https://developer.github.com/v3/search/#search-code
-	--></div></div>
+	<div id="topbar" class="red"><div id="logo"></div><div id="search"><input placeholder="Search..." autocomplete="off" /></div></div>
 	<div id="infobar"><h3>&hellip;</h3><div></div></div>
 	<div id="codes"></div>
 	<div id="selected"></div>
@@ -381,7 +382,8 @@ function showCodeThumbnails (codes, from, where) {
 }
 
 function setInfoBarTitle (image, title) {
-	document.querySelector ('#infobar h3').innerHTML = '<img src="' + image + '" /> ' + title;
+	document.querySelector ('#infobar h3').innerHTML = '<img src="' + image + '" /> <span></span>';
+	document.querySelector ('#infobar h3 span').textContent = title;
 }
 
 // TODO nicer pagination
@@ -509,6 +511,46 @@ function updatePage () {
 			best.push (code);
 		}
 	}
+
+	document.getElementById ('logo').onclick = function () {
+		location.hash = best [Math.floor (best.length * Math.random ()) % best.length].id;
+	};
+
+	var searchBox = document.getElementById ('search');
+	searchBox.onclick = searchBox.onkeydown = function (event) {
+		if ((event.keyCode == 13) || !event.keyCode) {
+			var searchString = searchBox.firstElementChild.value;
+			if (searchString) {
+
+				var request = new XMLHttpRequest;
+				request.onload = function () {
+					var response = JSON.parse (request.responseText);
+					if (response.items && response.items.length) {
+						var results = [];
+						for (var i = 0; i < Math.min (response.items.length, 20); i++) {
+							results.push (codesIndex [response.items [i].name.split ('.') [0]]);
+						}
+
+						results.sort (function (a, b) { return a.created - b.created });
+
+						setInfoBarTitle ('site/icon/favicon.svg', 'Top search results for “' + searchString + '”');
+						setInfoBarLinks (showCodeThumbnails (results, 0, '#codes'));
+
+						location.hash = results [0].id;
+					} else {
+						alert ('Nothing found for “' + searchString + '”');
+					}
+				};
+				request.open ('GET', 'https://api.github.com/search/code?q=' +
+					encodeURIComponent (searchString) +
+					'+in:file+language:actionscript+repo:makc/wonderfl'
+				);
+				request.send (null);
+
+				searchBox.firstElementChild.value = '';
+			}
+		}
+	};
 
 	window.onhashchange = updatePage;
 	updatePage ();
