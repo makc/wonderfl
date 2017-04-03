@@ -1,6 +1,6 @@
 /*
    Spriteを球状に配置しただけです。
-   Z-sortはclockmakerさんのものを利用させてもらってます（http://wonderfl.net/c/7fZn）。
+   Z-sortはclockmakerさんのものを利用させてもらってます（http://wonderfl.net/c/7fZn)
 */
 package
 {
