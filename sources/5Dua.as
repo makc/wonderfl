@@ -337,7 +337,7 @@ package
         
         //-------------------------------------------------------------------
         // forked from Box2Dの練習
-        // http://wonderfl.kayac.com/code/5fdd0af34ca9e7a3369f74c52cca9ddb85d136e4
+        // http://wonderfl.net/c/sdpJ
         //-------------------------------------------------------------------
         
         private const SCALE:uint = 100;
