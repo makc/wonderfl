@@ -356,6 +356,8 @@ function showCodeThumbnails (codes, from, where) {
 	}
 	document.querySelector (where).innerHTML = html;
 
+	if (codes.length == 0) return { range: '' };
+
 	var date1 = formatDate (codes[from].created).substr (0, 10);
 	var date2 = formatDate (codes[i - 1].created).substr (0, 10);
 	var range = 'from ' + date1;
