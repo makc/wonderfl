@@ -801,6 +801,26 @@
 		"user": "keim_at_Si"
 	},
 	{
+		"id": "0e45",
+		"created": 1229677064,
+		"modified": 1229677064,
+		"license": "other",
+		"title": "迷路自動生成(棒倒し法)",
+		"favorited": 5,
+		"forked": 4,
+		"talk": [
+			{
+				"comment": "useful",
+				"user": "peko"
+			},
+			{
+				"comment": "what peko said",
+				"user": "makc3d"
+			}
+		],
+		"user": "rsakane"
+	},
+	{
 		"id": "gYvR",
 		"parent": "rVuo",
 		"created": 1229691433,
@@ -5870,6 +5890,7 @@
 	},
 	{
 		"id": "gysG",
+		"parent": "0e45",
 		"created": 1237301336,
 		"modified": 1287454436,
 		"license": "other",
