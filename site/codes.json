@@ -23299,6 +23299,39 @@
 		"user": "actionscriptbible"
 	},
 	{
+		"id": "oKeC",
+		"created": 1263128718,
+		"modified": 1263128718,
+		"license": "MIT",
+		"title": "ワンダフルクエスト(不思議のダンジョン風に)",
+		"favorited": 49,
+		"forked": 5,
+		"viewed": 5346,
+		"talk": [
+			{
+				"comment": "good",
+				"user": "jidolstar"
+			},
+			{
+				"comment": "続きが見たくなる。",
+				"user": "soundkitchen.."
+			},
+			{
+				"comment": "すごい！ゲーム感が強くなった。地図もランダム生成。",
+				"user": "clockmaker"
+			},
+			{
+				"comment": "楽しい！",
+				"user": "OKASUKE"
+			},
+			{
+				"comment": "すごい！歩き回ってるだけで楽しい",
+				"user": "osamX"
+			}
+		],
+		"user": "rsakane"
+	},
+	{
 		"id": "3Ooc",
 		"parent": "vG9G",
 		"created": 1263151474,
