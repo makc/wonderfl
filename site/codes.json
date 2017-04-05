@@ -31591,6 +31591,52 @@
 		"user": "tencho"
 	},
 	{
+		"id": "y0cw",
+		"created": 1276159324,
+		"modified": 1276159324,
+		"license": "MIT",
+		"title": "キャラ / マップチップ表示",
+		"favorited": 66,
+		"forked": 27,
+		"viewed": 15163,
+		"talk": [
+			{
+				"comment": "位图区块游戏",
+				"user": "shangmingwen.."
+			},
+			{
+				"comment": "RPG",
+				"user": "kimo0517"
+			},
+			{
+				"comment": "10",
+				"user": "simon4761"
+			},
+			{
+				"comment": "2d dungeon game",
+				"user": "Chris.Kelvin.."
+			},
+			{
+				"comment": "Nice",
+				"user": "KuttyMoorthy.."
+			},
+			{
+				"comment": "rr",
+				"user": "tureki"
+			},
+			{
+				"comment": "ドット絵のクオリティ高い",
+				"user": "BMA_JAPAN"
+			},
+			{
+				"comment": "HI ,Which mapEditor was you used in this code? can you tell me ?",
+				"user": "layola",
+				"date": "2010/07/27 12:53:09"
+			}
+		],
+		"user": "rsakane"
+	},
+	{
 		"id": "horg",
 		"created": 1276182899,
 		"modified": 1276252084,
@@ -61064,9 +61110,9 @@
 		"license": "MIT",
 		"parent": "njap",
 		"title": "Sunset",
-		"favorited": 2,
+		"favorited": 5,
 		"forked": 0,
-		"viewed": 354,
+		"viewed": 401,
 		"talk": [
 			{
 				"comment": "the music won't play no matter what, so just cmd+click http://www.youtube.com/watch?v=YBtEFT_uWHA",
