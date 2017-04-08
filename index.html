@@ -184,10 +184,14 @@
 
 function replaceLinks (string) {
 	return string.replace (/(http[^\s<]+)/g, function (match) {
+		// specifically do not turn asset urls into links
+		if (match.indexOf ('assets.wonderfl.net') > 0) {
+			return match;
+		}
 		// separate from trailing garbage
 		var clean = match.match (/(.+?)([,;'"\.)]+)$/) || [match, match, ''];
 		// see if it's wonderfl url
-		var code = clean [1].match (/wonderfl\.net\/[^\s]*\/([^\s\/]+)/);
+		var code = clean [1].match (/\/wonderfl\.net\/[^\s]*\/([^\s\/]+)/);
 		var link = code ? (
 			// if not in index, fall back to yonatan's archive
 			(codesIndex [code [1]] ? '#' : 'http://wa.zozuar.org/code.php?c=') + code [1]
