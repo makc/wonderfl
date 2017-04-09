@@ -184,8 +184,8 @@
 
 function replaceLinks (string) {
 	return string.replace (/(http[^\s<]+)/g, function (match) {
-		// specifically do not turn asset urls into links
-		if (match.indexOf ('assets.wonderfl.net') > 0) {
+		// specifically do not turn wonderfl subdomain urls into links
+		if (/\w+\.wonderfl\.net/.test (match)) {
 			return match;
 		}
 		// separate from trailing garbage
