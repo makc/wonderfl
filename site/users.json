@@ -917,12 +917,6 @@
 		"external_url": "http://d.hatena.ne.jp/gyuque/",
 		"description": "How many files(0-15)? █"
 	},
-	"keiso": {
-		"icon": "017b6770451dc6bfb3bdeb948dfcec72038faaaem.jpg",
-		"name": "keiso",
-		"external_url": "http://www.kei3.com/",
-		"description": "プログラマをしてます。最近はObjective-Cとか・・・。たまにFlashとかFlex。以前はPHP+MySQLとか。"
-	},
 	"naoto5959": {
 		"icon": "fc7e0ff47efad80742ebf14bf42b7e0d6b587e38m.jpg",
 		"name": "naoto5959",
